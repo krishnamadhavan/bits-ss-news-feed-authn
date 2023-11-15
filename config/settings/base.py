@@ -1,6 +1,7 @@
 """
 Base settings to build other settings files upon.
 """
+from datetime import timedelta
 from pathlib import Path
 
 import environ
@@ -65,6 +66,7 @@ DJANGO_APPS = [
 ]
 THIRD_PARTY_APPS = [
     "rest_framework",
+    "djoser",
     "corsheaders",
     "drf_spectacular",
 ]
@@ -242,7 +244,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
 }
 
@@ -252,7 +254,7 @@ SPECTACULAR_SETTINGS = {
     "TITLE": "News Feed Authentication API",
     "DESCRIPTION": "Documentation of API endpoints of News Feed Authentication",
     "VERSION": "1.0.0",
-    "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAdminUser"],
+    "SERVE_PERMISSIONS": ["rest_framework.permissions.AllowAny"],
     "SERVERS": [
         {"url": "", "description": "Same server"},
         {"url": "http://127.0.0.1:8000", "description": "Local Development server"},
@@ -294,3 +296,10 @@ CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 SUPERUSER_USERNAME = env("SUPERUSER_USERNAME", default="madhavank")
 SUPERUSER_EMAIL = env("SUPERUSER_EMAIL", default="madhavank@who.int")
 SUPERUSER_PASSWORD = env("SUPERUSER_PASSWORD", default="admin")
+
+# https://djoser.readthedocs.io/en/latest/authentication_backends.html#django-settings
+# ------------------------------------------------------------------------------
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "UPDATE_LAST_LOGIN": True,
+}

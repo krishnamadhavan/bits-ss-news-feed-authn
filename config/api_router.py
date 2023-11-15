@@ -12,5 +12,6 @@ app_name = "api"
 urlpatterns = router.urls
 
 urlpatterns += [
-    path("users/", include("news_feed_authn.users.urls")),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.jwt')),
 ]
