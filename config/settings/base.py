@@ -302,4 +302,5 @@ SUPERUSER_PASSWORD = env("SUPERUSER_PASSWORD", default="admin")
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "UPDATE_LAST_LOGIN": True,
+    "TOKEN_OBTAIN_SERIALIZER": "news_feed_authn.users.api.serializers.CustomTokenObtainPairSerializer",
 }
